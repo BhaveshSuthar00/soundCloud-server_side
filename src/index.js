@@ -1,0 +1,22 @@
+const express = require("express")
+
+
+const app = express()
+app.use(express.json())
+
+
+
+
+const userController = require("./controllers/user.controller")
+const likedController = require("./controllers/liked.controller")
+const playlistController = require("./controllers/playlist.controller")
+const libraryController = require("./controllers/library.controller")
+const Songs = require("./controllers/Songs.controller")
+
+
+app.use("/liked",likedController)
+app.use('/songpost', Songs)
+app.use("/playlist",playlistController)
+app.use("/library",libraryController)
+
+module.exports=app
