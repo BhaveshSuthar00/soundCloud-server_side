@@ -4,16 +4,18 @@ const app = express()
 const connect = require("./config/db")
 app.use(express.json())
 const PORT = process.env.PORT || 6767
-
-
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 const userController = require("./controllers/user.controller")
 const likedController = require("./controllers/liked.controller")
 const playlistController = require("./controllers/playlist.controller")
 const libraryController = require("./controllers/library.controller")
 const Songs = require("./controllers/Songs.controller")
-
-
+app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use('/uploads', express.static('uploads'))
 app.use('/', Songs)
 app.use("/liked",likedController)
 app.use("/playlist",playlistController)
