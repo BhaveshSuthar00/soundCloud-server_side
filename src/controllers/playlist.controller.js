@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("", async (req, res) => {
   try {
-    const playlist = await Playlist.create(req.body);
+    const playlist = await Playlist.create();
     return res.status(200).send(playlist);
   } catch (err) {
     return res.status(400).send(err.message);
