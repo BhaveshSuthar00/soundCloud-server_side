@@ -12,11 +12,12 @@ const likedController = require("./controllers/liked.controller")
 const playlistController = require("./controllers/playlist.controller")
 const libraryController = require("./controllers/library.controller")
 const Songs = require("./controllers/Songs.controller")
+const globalC = require("./controllers/globalplaylist.controller")
 app.use('/', Songs)
 app.use("/liked",likedController)
 app.use("/playlist",playlistController)
 app.use("/library",libraryController)
-
+app.use("/list",globalC)
 app.listen(PORT, async ()=>{
     await connect()
     console.log(`listening on port ${PORT}`)
