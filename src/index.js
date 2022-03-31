@@ -14,8 +14,8 @@ const libraryController = require("./controllers/library.controller")
 const Songs = require("./controllers/Songs.controller")
 
 
+app.use('/', Songs)
 app.use("/liked",likedController)
-app.use('/songpost', Songs)
 app.use("/playlist",playlistController)
 app.use("/library",libraryController)
 app.listen(PORT, async ()=>{
