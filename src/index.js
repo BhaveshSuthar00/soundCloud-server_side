@@ -4,6 +4,7 @@ const cors = require("cors")
 const app = express()
 const connect = require("./config/db")
 app.use(express.json())
+
 const PORT = process.env.PORT || 2000
 
 const userController = require("./controllers/user.controller")
@@ -15,6 +16,7 @@ app.use('/', Songs)
 app.use("/liked",likedController)
 app.use("/playlist",playlistController)
 app.use("/library",libraryController)
+
 app.listen(PORT, async ()=>{
     await connect()
     console.log(`listening on port ${PORT}`)
