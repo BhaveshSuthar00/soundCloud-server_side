@@ -11,4 +11,4 @@ const playlistSchema = new mongoose.Schema(
     }
 );
 
-module.exports =  mongoose.model("playlist", playlistSchema);
+module.exports =  mongoose.model("globalplaylist", playlistSchema);
