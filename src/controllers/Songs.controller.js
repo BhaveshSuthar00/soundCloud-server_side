@@ -50,4 +50,17 @@ router.delete('/:id', async(req, res) => {
         return res.status(500).send(err.message);
     }
 })
+
+router.get('/api/category/all', async (req, res) => {
+    try  {
+        const pop = await Song.find({ category : "pop"}).lean().exec();
+        const classical = await Song.find({ category : 'classical'}).lean().exec();
+        const rock = await Song.find({ category : 'rock'}).lean().exec();
+        const jezz = await Song.find({ category : 'jezz'}).lean().exec();
+        return res.status(200).send({pop : pop, classical : classical, rock : rock, jezz : jezz});
+    }
+    catch (err) {
+        return res.status(500).send({error : err.message});
+    }
+})
 module.exports=router
