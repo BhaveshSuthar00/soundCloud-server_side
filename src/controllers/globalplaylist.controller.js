@@ -27,7 +27,7 @@ router.get("/:_id", async (req, res) => {
   try {
     const globalID = req.params._id;
 
-    const globalPlaylist = await PlaylistG.findById(globalID);
+    const globalPlaylist = await PlaylistG.findById(globalID).populate("playlist").lean().exec();
 
     return res.status(200).send(globalPlaylist);
   } catch (err) {
