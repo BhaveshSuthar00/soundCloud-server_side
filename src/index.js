@@ -17,7 +17,7 @@ app.use('/', Songs)
 app.use("/liked",likedController)
 app.use("/playlist",playlistController)
 app.use("/library",libraryController)
-// app.use("/list",globalC)
+app.use("/list",globalC)
 app.listen(PORT, async ()=>{
     await connect()
     console.log(`listening on port ${PORT}`)
