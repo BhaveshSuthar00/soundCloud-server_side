@@ -4,7 +4,7 @@ const User = require("../model/user.model")
 const router =  express.Router()
 
 
-router.post("",async(req,res)=>{
+router.post("/post",async(req,res)=>{
     try{
         const user = await User.create(req.body)
         return res.status(200).send(user)
@@ -14,10 +14,14 @@ router.post("",async(req,res)=>{
 })
 
 
-router.get("",async(req,res)=>{
+router.get("/login",async(req,res)=>{
     try{
-        const user = await User.find().lean().exec()
-        return res.status(200).send(user)
+        const user = await User.findOne({$and : [{email : req.body.email}, {password : req.body.password}]}).lean().exec()
+        if(user){
+            return res.status(200).send(user)
+        } else {
+            return res.status(404).send({message: "User not found"})
+        }
     }catch(err){
         return res.status(400).send(err.message)
     }
