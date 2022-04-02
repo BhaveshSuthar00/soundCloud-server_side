@@ -26,14 +26,14 @@ router.get('/all', async (req, res) => {
     }
 })
 
-router.get("/login",async(req,res)=>{
+router.get("/login/singleuser",async(req,res)=>{
     try{
         const user = await User.findOne({email : req.body.email}).lean().exec();
-        if(user.password === req.body.password){
+        // if(user.password === req.body.password){
             return res.status(200).send(user)
-        } else {
-            return res.status(404).send({message : "User not found"})
-        }
+        // } else {
+            // return res.status(404).send({message : "User not found"})
+        // }
     }catch(err){
         return res.status(400).send(err.message)
     }
