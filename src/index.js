@@ -6,7 +6,6 @@ const connect = require("./config/db")
 app.use(cors())
 app.use(express.json())
 const PORT = process.env.PORT || 2000
-
 const userController = require("./controllers/user.controller")
 const likedController = require("./controllers/liked.controller")
 const playlistController = require("./controllers/playlist.controller")

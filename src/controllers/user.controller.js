@@ -28,12 +28,21 @@ router.get('/all', async (req, res) => {
 
 router.post("/login/singleuser",async(req,res)=>{
     try{
-        const user = await User.findOne({$and : [{email : req.body.email}, {password : req.body.password}]}).lean().exec()
-        if(user){
-            return res.status(200).send(user)
-        } else {
-            return res.status(301).send({message: 'Invalid username or password'})
+        const user = await User.findOne({ email: req.body.email });        
+        if (!user) {
+            return res.render("login", {
+                success: false,
+                message: "Incorrect Email or Password",
+            });
         }
+        const match = user.checkPassword(req.body.password);
+        if (!match) {
+            return res.status(404).send({
+                success: false,
+                message: "Incorrect Email or Password",
+            });
+        }
+        return res.status(200).send(user)
     }catch(err){
         return res.status(400).send(err.message)
     }
