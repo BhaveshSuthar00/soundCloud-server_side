@@ -16,19 +16,21 @@ router.post("/post",async(req,res)=>{
         return res.status(400).send(err.message)
     }
 })
-router.get('/all', async (req, res) => {
-    try {
-        const user = await User.find().lean().exec();
-        return res.status(200).send(user)
-    }
-    catch(err){
-        return res.status(400).send({message : "users not found"})
-    }
-})
+// router.get('/all', async (req, res) => {
+//     try {
+//         const user = await User.find().lean().exec();
+//         return res.status(200).send(user)
+//     }
+//     catch(err){
+//         return res.status(400).send({message : "users not found"})
+//     }
+// })
 
 router.post("/login/singleuser",async(req,res)=>{
     try{
-        const user = await User.findOne({ email: req.body.email });        
+        
+        const user = await User.findOne({ email: req.body.email });
+        const user2 = await User.findOne({ email: req.body.email }, { password : 0});
         if (!user) {
             return res.render("login", {
                 success: false,
@@ -39,10 +41,11 @@ router.post("/login/singleuser",async(req,res)=>{
         if (!match) {
             return res.status(404).send({
                 success: false,
-                message: "Incorrect Email or Password",
+                message: "Incorrect Password",
             });
         }
-        return res.status(200).send(user)
+        console.count(user2, 'rewq is new now');
+        return res.status(200).send(user2)
     }catch(err){
         return res.status(400).send(err.message)
     }
