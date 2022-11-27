@@ -57,7 +57,12 @@ router.get('/api/category/all', async (req, res) => {
         const classical = await Song.find({ category : 'classical'}).lean().exec();
         const rock = await Song.find({ category : 'rock'}).lean().exec();
         const jazz = await Song.find({ category : 'jazz'}).lean().exec();
-        return res.status(200).send({pop : pop, classical : classical, rock : rock, jazz : jazz});
+        return res.status(200).send([
+            { pop , name : "Pop", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/pop_tezxp5.jpg' }, 
+            { classical , name : "Classical", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/classical_odvcbq.jpg' }, 
+            { rock , name : "Rock", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/rock_okpuns.jpg' }, 
+            { jazz , name : "Jazz", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/jazz_jlaxxj.png' }
+        ]);
     }
     catch (err) {
         return res.status(500).send({error : err.message});

@@ -1,31 +1,41 @@
 const express = require("express")
 const User = require("../model/user.model")
 
-const router =  express.Router()
+const router =  express.Router();
 
 
 router.post("/post",async(req,res)=>{
     try{
+        const alreadyUser =  await User.findOne({email : req.body.email}).lean().exec();
+        if(alreadyUser) return res.status(403).send({message : 'Email already exist try login'});
         const user = await User.create({
             email: req.body.email,
             password : req.body.password,
             userName : req.body.name
-        })
-        return res.status(200).send(user)
+        });
+        return res.status(200).send(user);
     }catch(err){
-        return res.status(400).send(err.message)
+        return res.status(400).send(err.message);
     }
 })
-// router.get('/all', async (req, res) => {
-//     try {
-//         const user = await User.find().lean().exec();
-//         return res.status(200).send(user)
-//     }
-//     catch(err){
-//         return res.status(400).send({message : "users not found"})
-//     }
-// })
-
+router.get('/all', async (req, res) => {
+    try {
+        const user = await User.find().lean().exec();
+        return res.status(200).send(user);
+    }
+    catch(err){
+        return res.status(400).send({message : "users not found"});
+    }
+})
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id).lean().exec();
+        return res.status(200).send({message : "users delete"});
+    }
+    catch(err){
+        return res.status(400).send({message : "users not found"});
+    }
+})
 router.post("/login/singleuser",async(req,res)=>{
     try{
         
@@ -44,10 +54,9 @@ router.post("/login/singleuser",async(req,res)=>{
                 message: "Incorrect Password",
             });
         }
-        console.count(user2, 'rewq is new now');
-        return res.status(200).send(user2)
+        return res.status(200).send(user2);
     }catch(err){
-        return res.status(400).send(err.message)
+        return res.status(400).send(err.message);
     }
 })
 
