@@ -3,7 +3,6 @@ const Song = require('../model/Song.model');
 const router = express.Router();
 router.post('/post', async (req, res) => {
     try {
-        console.log(req.body)
         const songData = {
             name : req.body.name,
             singer : req.body.singer,
@@ -27,7 +26,7 @@ router.get('/',async(req, res) => {
         return res.status(200).send(songsData);
     }
     catch (err) {
-
+        return res.status(500).send(err.message);
     }
 })
 router.get('/api/:id', async (req, res) => {
@@ -36,7 +35,7 @@ router.get('/api/:id', async (req, res) => {
         return res.status(200).send(item);
     }
     catch (err) {
-        
+        return res.status(500).send(err.message);
     }
 })
 
@@ -57,7 +56,7 @@ router.get('/api/category/all', async (req, res) => {
         const classical = await Song.find({ category : 'classical'}).lean().exec();
         const rock = await Song.find({ category : 'rock'}).lean().exec();
         const jazz = await Song.find({ category : 'jazz'}).lean().exec();
-        return res.status(200).send([
+        return res.status(200).json([
             { pop , name : "Pop", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/pop_tezxp5.jpg' }, 
             { classical , name : "Classical", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/classical_odvcbq.jpg' }, 
             { rock , name : "Rock", coverImg : 'https://res.cloudinary.com/dqmzkayzb/image/upload/v1669534127/samples/soundCloud/rock_okpuns.jpg' }, 
