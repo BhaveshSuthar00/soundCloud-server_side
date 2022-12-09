@@ -6,7 +6,6 @@ const likedSchema = new mongoose.Schema(
          type: mongoose.Schema.Types.ObjectId,
          ref:"user",
          required:true,
-         unique : true
      },
      likedSong:[{type: mongoose.Schema.Types.ObjectId, ref: 'song', required:true}]
   },
